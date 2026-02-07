@@ -14,46 +14,25 @@ namespace PedidoApp.ViewModels
 
         public Produto ProdutoEditado { get; private set; }
 
-        // Callback para fechar a janela
+        // Callback para a View fechar
         public Action<bool?> FecharJanela { get; set; }
 
         public string Nome
         {
             get => _nome;
-            set
-            {
-                if (_nome != value)
-                {
-                    _nome = value;
-                    OnPropertyChanged(nameof(Nome));
-                }
-            }
+            set { _nome = value; OnPropertyChanged(nameof(Nome)); }
         }
 
         public string Codigo
         {
             get => _codigo;
-            set
-            {
-                if (_codigo != value)
-                {
-                    _codigo = value;
-                    OnPropertyChanged(nameof(Codigo));
-                }
-            }
+            set { _codigo = value; OnPropertyChanged(nameof(Codigo)); }
         }
 
         public string Valor
         {
             get => _valor;
-            set
-            {
-                if (_valor != value)
-                {
-                    _valor = value;
-                    OnPropertyChanged(nameof(Valor));
-                }
-            }
+            set { _valor = value; OnPropertyChanged(nameof(Valor)); }
         }
 
         public RelayCommand SalvarCommand { get; }
@@ -61,9 +40,10 @@ namespace PedidoApp.ViewModels
 
         public ProdutoModalViewModel(Produto produto = null)
         {
+            ProdutoEditado = produto ?? new Produto();
+
             if (produto != null)
             {
-                ProdutoEditado = produto;
                 Nome = produto.Nome;
                 Codigo = produto.Codigo;
                 Valor = produto.Valor.ToString("F2", CultureInfo.InvariantCulture);
@@ -75,7 +55,6 @@ namespace PedidoApp.ViewModels
 
         private bool PodeSalvar()
         {
-            // Validações básicas
             return string.IsNullOrWhiteSpace(this[nameof(Nome)]) &&
                    string.IsNullOrWhiteSpace(this[nameof(Codigo)]) &&
                    string.IsNullOrWhiteSpace(this[nameof(Valor)]);
@@ -83,21 +62,15 @@ namespace PedidoApp.ViewModels
 
         private void Salvar()
         {
-            if (ProdutoEditado == null)
-                ProdutoEditado = new Produto();
-
             ProdutoEditado.Nome = Nome;
             ProdutoEditado.Codigo = Codigo;
 
-            if (decimal.TryParse(Valor.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out decimal valorDecimal))
-            {
-                ProdutoEditado.Valor = valorDecimal;
-            }
-            else
+            if (!decimal.TryParse(Valor.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out decimal valorDecimal))
             {
                 MessageBox.Show("Digite um valor válido.");
                 return;
             }
+            ProdutoEditado.Valor = valorDecimal;
 
             FecharJanela?.Invoke(true);
         }
@@ -109,10 +82,8 @@ namespace PedidoApp.ViewModels
 
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string nome)
-        {
+        protected void OnPropertyChanged(string nome) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nome));
-        }
         #endregion
 
         #region IDataErrorInfo
@@ -122,13 +93,10 @@ namespace PedidoApp.ViewModels
             {
                 switch (columnName)
                 {
-                    case nameof(Nome):
-                        return string.IsNullOrWhiteSpace(Nome) ? "Nome obrigatório" : null;
-                    case nameof(Codigo):
-                        return string.IsNullOrWhiteSpace(Codigo) ? "Código obrigatório" : null;
+                    case nameof(Nome): return string.IsNullOrWhiteSpace(Nome) ? "Nome obrigatório" : null;
+                    case nameof(Codigo): return string.IsNullOrWhiteSpace(Codigo) ? "Código obrigatório" : null;
                     case nameof(Valor):
-                        if (string.IsNullOrWhiteSpace(Valor))
-                            return "Valor obrigatório";
+                        if (string.IsNullOrWhiteSpace(Valor)) return "Valor obrigatório";
                         if (!decimal.TryParse(Valor.Replace(",", "."), NumberStyles.Any, CultureInfo.InvariantCulture, out _))
                             return "Valor inválido";
                         break;
@@ -136,7 +104,6 @@ namespace PedidoApp.ViewModels
                 return null;
             }
         }
-
         public string Error => null;
         #endregion
     }

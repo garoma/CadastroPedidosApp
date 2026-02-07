@@ -1,25 +1,26 @@
-﻿using System.Windows;
-using PedidoApp.Models;
-using PedidoApp.ViewModels;
+﻿using PedidoApp.ViewModels;
+using System.Windows;
 
 namespace PedidoApp.Views
 {
     public partial class ProdutoModal : Window
     {
-        public ProdutoModalViewModel ViewModel => DataContext as ProdutoModalViewModel;
+        public ProdutoModalViewModel ViewModel { get; private set; }
 
-        public ProdutoModal(Produto produto = null)
+        public ProdutoModal(Models.Produto produto = null)
         {
             InitializeComponent();
 
-            var vm = new ProdutoModalViewModel(produto);
-            vm.FecharJanela = (resultado) =>
-            {
-                this.DialogResult = resultado;
-                this.Close();
-            };
+            ViewModel = new ProdutoModalViewModel(produto);
+            ViewModel.FecharJanela = ResultadoFechar;
 
-            DataContext = vm;
+            DataContext = ViewModel;
+        }
+
+        private void ResultadoFechar(bool? resultado)
+        {
+            DialogResult = resultado;
+            Close();
         }
     }
 }
