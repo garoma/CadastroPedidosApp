@@ -1,0 +1,49 @@
+﻿<Window x:Class="PedidoApp.Views.ProdutoModal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cadastro de Produto"
+        Height="320"
+        Width="420"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        WindowStyle="ToolWindow">
+
+    <Grid Margin="20">
+
+        <StackPanel>
+
+            <TextBlock Text="Dados do Produto"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Margin="0,0,0,20"/>
+
+            <TextBlock Text="Nome:"/>
+            <TextBox x:Name="txtNome"
+                     Margin="0,5,0,10"/>
+
+            <TextBlock Text="Código:"/>
+            <TextBox x:Name="txtCodigo"
+                     Margin="0,5,0,10"/>
+
+            <TextBlock Text="Valor (R$):"/>
+            <TextBox x:Name="txtValor"
+                     Margin="0,5,0,20"/>
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+
+                <Button Content="Cancelar"
+                        Width="90"
+                        Margin="0,0,10,0"
+                        Click="Cancelar_Click"/>
+
+                <Button Content="Salvar"
+                        Width="90"
+                        Click="Salvar_Click"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

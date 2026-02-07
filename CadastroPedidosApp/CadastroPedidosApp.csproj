@@ -71,8 +71,14 @@
     <Compile Include="Views\PedidoView.xaml.cs">
       <DependentUpon>PedidoView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PessoaModal.xaml.cs">
+      <DependentUpon>PessoaModal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\PessoasView.xaml.cs">
       <DependentUpon>PessoasView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProdutoModal.xaml.cs">
+      <DependentUpon>ProdutoModal.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ProdutosView.xaml.cs">
       <DependentUpon>ProdutosView.xaml</DependentUpon>
@@ -97,7 +103,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PessoaModal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PessoasView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProdutoModal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

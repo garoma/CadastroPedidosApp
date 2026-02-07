@@ -1,5 +1,6 @@
 ﻿using PedidoApp.Models;
 using PedidoApp.Services;
+using PedidoApp.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -62,21 +63,54 @@ namespace PedidoApp.ViewModels
                 ProdutosFiltrados.Add(p);
         }
 
+        //private void Incluir()
+        //{
+        //    var novo = new Produto
+        //    {
+        //        Id = produtos.Count + 1,
+        //        Nome = "Novo Produto",
+        //        Codigo = "000",
+        //        Valor = 0
+        //    };
+
+        //    produtos.Add(novo);
+        //    JsonDatabase.Save("produtos.json", produtos);
+
+        //    ProdutosFiltrados.Add(novo);
+        //}
+
         private void Incluir()
         {
-            var novo = new Produto
+            var modal = new ProdutoModal();
+            modal.Owner = Application.Current.MainWindow;
+
+            if (modal.ShowDialog() == true)
             {
-                Id = produtos.Count + 1,
-                Nome = "Novo Produto",
-                Codigo = "000",
-                Valor = 0
-            };
+                var novoProduto = modal.ProdutoEditado;
 
-            produtos.Add(novo);
-            JsonDatabase.Save("produtos.json", produtos);
+                novoProduto.Id = produtos.Count + 1;
 
-            ProdutosFiltrados.Add(novo);
+                produtos.Add(novoProduto);
+
+                JsonDatabase.Save("produtos.json", produtos);
+
+                ProdutosFiltrados.Add(novoProduto);
+            }
         }
+
+        //private void Editar()
+        //{
+        //    if (ProdutoSelecionado == null)
+        //    {
+        //        MessageBox.Show("Selecione um produto.");
+        //        return;
+        //    }
+
+        //    ProdutoSelecionado.Nome += " (Editado)";
+        //    JsonDatabase.Save("produtos.json", produtos);
+
+        //    Buscar();
+        //}
 
         private void Editar()
         {
@@ -86,10 +120,15 @@ namespace PedidoApp.ViewModels
                 return;
             }
 
-            ProdutoSelecionado.Nome += " (Editado)";
-            JsonDatabase.Save("produtos.json", produtos);
+            var modal = new ProdutoModal(ProdutoSelecionado);
+            modal.Owner = Application.Current.MainWindow;
 
-            Buscar();
+            if (modal.ShowDialog() == true)
+            {
+                JsonDatabase.Save("produtos.json", produtos);
+
+                Buscar();
+            }
         }
 
         private void Excluir()

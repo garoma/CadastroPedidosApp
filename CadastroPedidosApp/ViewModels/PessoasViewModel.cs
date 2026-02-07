@@ -1,5 +1,6 @@
 ﻿using PedidoApp.Models;
 using PedidoApp.Services;
+using PedidoApp.Views;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,8 +13,9 @@ namespace PedidoApp.ViewModels
         private List<Pessoa> pessoas;
 
         public ObservableCollection<Pessoa> PessoasFiltradas { get; set; }
-
         public Pessoa PessoaSelecionada { get; set; }
+
+        public Pessoa  pessoa { get; set; }
 
         public string TextoFiltro { get; set; }
 
@@ -52,18 +54,26 @@ namespace PedidoApp.ViewModels
 
         private void Incluir()
         {
-            var nova = new Pessoa
+            // Abre modal vazia (novo cadastro)
+            var modal = new PessoaModal();
+            modal.Owner = Application.Current.MainWindow;
+
+            if (modal.ShowDialog() == true)
             {
-                Id = pessoas.Count + 1,
-                Nome = "Nova Pessoa",
-                CPF = "00000000000",
-                Endereco = ""
-            };
+                var novaPessoa = modal.PessoaEditada;
 
-            pessoas.Add(nova);
-            JsonDatabase.Save("pessoas.json", pessoas);
+                // Gera ID simples
+                novaPessoa.Id = pessoas.Count + 1;
 
-            PessoasFiltradas.Add(nova);
+                // Adiciona na lista principal
+                pessoas.Add(novaPessoa);
+
+                // Salva no JSON
+                JsonDatabase.Save("pessoas.json", pessoas);
+
+                // Atualiza lista da tela
+                PessoasFiltradas.Add(novaPessoa);
+            }
         }
 
         private void Editar()
@@ -74,10 +84,20 @@ namespace PedidoApp.ViewModels
                 return;
             }
 
-            PessoaSelecionada.Nome += " (Editado)";
-            JsonDatabase.Save("pessoas.json", pessoas);
+            // Abre modal preenchida
+            var modal = new PessoaModal(PessoaSelecionada);
+            modal.Owner = Application.Current.MainWindow;
 
-            Buscar();
+            if (modal.ShowDialog() == true)
+            {
+                // PessoaSelecionada já foi alterada dentro do modal
+
+                // Salva no JSON
+                JsonDatabase.Save("pessoas.json", pessoas);
+
+                // Atualiza grid
+                Buscar();
+            }
         }
 
         private void Excluir()
