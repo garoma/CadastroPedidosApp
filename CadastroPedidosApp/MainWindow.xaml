@@ -1,0 +1,22 @@
+﻿<Window x:Class="PedidoApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Sistema de Pedidos" Height="500" Width="900">
+
+    <DockPanel>
+
+        <!-- MENU SUPERIOR -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Pessoas" Click="MenuPessoas_Click"/>
+            <MenuItem Header="Produtos" Click="MenuProdutos_Click"/>
+            <MenuItem Header="Pedidos" Click="MenuPedidos_Click"/>
+        </Menu>
+
+        <!-- ÁREA CENTRAL -->
+        <Grid>
+            <ContentControl x:Name="ConteudoTela"/>
+        </Grid>
+
+    </DockPanel>
+
+</Window>

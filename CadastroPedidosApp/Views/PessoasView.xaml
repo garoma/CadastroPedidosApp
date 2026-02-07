@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="PedidoApp.Views.PessoasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Height="450" Width="850">
+
+    <Grid Margin="10">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- FILTRO -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Filtro:" VerticalAlignment="Center"/>
+            <TextBox Width="250"
+                     Margin="10,0"
+                     Text="{Binding TextoFiltro, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <Button Content="Buscar"
+                    Width="100"
+                    Command="{Binding BuscarCommand}"/>
+        </StackPanel>
+
+        <!-- LISTA -->
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding PessoasFiltradas}"
+                  SelectedItem="{Binding PessoaSelecionada}"
+                  AutoGenerateColumns="False"
+                  Height="300">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" Width="*"/>
+                <DataGridTextColumn Header="CPF" Binding="{Binding CPF}" Width="150"/>
+                <DataGridTextColumn Header="Endereço" Binding="{Binding Endereco}" Width="*"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <!-- BOTÕES -->
+        <StackPanel Grid.Row="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="0,10,0,0">
+
+            <Button Content="Incluir"
+                    Width="100"
+                    Margin="5"
+                    Command="{Binding IncluirCommand}"/>
+
+            <Button Content="Editar"
+                    Width="100"
+                    Margin="5"
+                    Command="{Binding EditarCommand}"/>
+
+            <Button Content="Excluir"
+                    Width="100"
+                    Margin="5"
+                    Command="{Binding ExcluirCommand}"/>
+
+            <Button Content="Incluir Pedido"
+                    Width="130"
+                    Margin="5"
+                    Command="{Binding IncluirPedidoCommand}"/>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
