@@ -60,7 +60,7 @@ namespace PedidoApp.ViewModels
 
             if (modal.ShowDialog() == true)
             {
-                var novaPessoa = modal.PessoaEditada;
+                var novaPessoa = modal.ViewModel.PessoaEditada;
 
                 // Gera ID simples
                 novaPessoa.Id = pessoas.Count + 1;

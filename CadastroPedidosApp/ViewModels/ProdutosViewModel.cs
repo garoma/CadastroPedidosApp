@@ -63,22 +63,6 @@ namespace PedidoApp.ViewModels
                 ProdutosFiltrados.Add(p);
         }
 
-        //private void Incluir()
-        //{
-        //    var novo = new Produto
-        //    {
-        //        Id = produtos.Count + 1,
-        //        Nome = "Novo Produto",
-        //        Codigo = "000",
-        //        Valor = 0
-        //    };
-
-        //    produtos.Add(novo);
-        //    JsonDatabase.Save("produtos.json", produtos);
-
-        //    ProdutosFiltrados.Add(novo);
-        //}
-
         private void Incluir()
         {
             var modal = new ProdutoModal();
@@ -86,7 +70,7 @@ namespace PedidoApp.ViewModels
 
             if (modal.ShowDialog() == true)
             {
-                var novoProduto = modal.ProdutoEditado;
+                var novoProduto = modal.ViewModel.ProdutoEditado;
 
                 novoProduto.Id = produtos.Count + 1;
 
@@ -97,20 +81,6 @@ namespace PedidoApp.ViewModels
                 ProdutosFiltrados.Add(novoProduto);
             }
         }
-
-        //private void Editar()
-        //{
-        //    if (ProdutoSelecionado == null)
-        //    {
-        //        MessageBox.Show("Selecione um produto.");
-        //        return;
-        //    }
-
-        //    ProdutoSelecionado.Nome += " (Editado)";
-        //    JsonDatabase.Save("produtos.json", produtos);
-
-        //    Buscar();
-        //}
 
         private void Editar()
         {

@@ -59,10 +59,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Services\JsonDatabase.cs" />
+    <Compile Include="Utils\CpfHelper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\PedidosViewModel.cs" />
     <Compile Include="ViewModels\PedidoViewModel.cs" />
+    <Compile Include="ViewModels\PessoaModalViewModel.cs" />
     <Compile Include="ViewModels\PessoasViewModel.cs" />
+    <Compile Include="ViewModels\ProdutoModalViewModel.cs" />
     <Compile Include="ViewModels\ProdutosViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\PedidosView.xaml.cs">
